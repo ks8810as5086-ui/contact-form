@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->string('first_name', 255);
             $table->string('last_name', 255);
-            //性別です。男性は1、女性は2、その他は3
+            // 性別です。男性は1、女性は2、その他は3
             $table->tinyInteger('gender');
             $table->string('email', 255);
             $table->string('tel', 11);
