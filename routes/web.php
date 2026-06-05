@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,7 @@ Route::post('/contacts/confirm', [ContactController::class, 'confirm'])->name('c
 Route::get('/contacts/thanks', function () {
     return view('contact.thanks');
 })->name('contact.thanks');
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/show', [AdminController::class, 'show'])->name('admin.show');
+});
