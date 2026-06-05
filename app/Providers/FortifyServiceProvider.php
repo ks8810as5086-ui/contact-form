@@ -8,6 +8,7 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -51,6 +52,15 @@ class FortifyServiceProvider extends ServiceProvider
         // ユーザ登録フォームのビューを指定
         Fortify::registerView(function () {
             return view('auth.register');
+        });
+        // ログイン成功時に自動的に /admin にリダイレクトさせる
+        Fortify::authenticateUsing(function ($request) {
+            $user = Auth::attempt([
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
+
+            return $user ? Auth::user() : null;
         });
     }
 }

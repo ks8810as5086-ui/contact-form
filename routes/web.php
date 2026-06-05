@@ -15,14 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// --- 誰でもアクセスできる画面 ---
 Route::get('/', [ContactController::class, 'index'])->name('contact.index');
-
 Route::resource('contacts', ContactController::class)->only(['index', 'store']);
 Route::post('/contacts/confirm', [ContactController::class, 'confirm'])->name('contacts.confirm');
 Route::get('/contacts/thanks', function () {
     return view('contact.thanks');
 })->name('contact.thanks');
+
+// --- 管理画面（認証が必要な画面） ---
+// middleware('auth') を適用
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/show', [AdminController::class, 'show'])->name('admin.show');
+    Route::get('/admin/contacts/{contact}', [AdminController::class, 'show'])->name('admin.show');
+    Route::delete('/admin/contacts/{contact}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
