@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IndexContactRequest;
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\Tag;
 
 class AdminController extends Controller
 {
@@ -15,9 +16,11 @@ class AdminController extends Controller
         $categories = Category::all();
         // お問い合わせ一覧をバリデーション済みのデータを使って7件ごとにページネーションつきで取得
         $contacts = Contact::search($request->validated())->latest()->paginate(7);
+        //タグを全件取得する
+        $tags = Tag::all();
 
         // ビューにデータを渡す
-        return view('admin.index', compact('categories', 'contacts'));
+        return view('admin.index', compact('categories', 'contacts','tags'));
     }
 
     // 登録ページの詳細を表示する
