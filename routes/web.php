@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,8 +26,11 @@ Route::get('/contacts/thanks', function () {
 
 // --- 管理画面（認証が必要な画面） ---
 // middleware('auth') を適用
-Route::middleware('auth')->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/contacts/{contact}', [AdminController::class, 'show'])->name('admin.show');
-    Route::delete('/admin/contacts/{contact}', [AdminController::class, 'destroy'])->name('admin.destroy');
+Route::prefix('admin')->middleware('auth')->group(function () {
+    //お問い合わせ管理画面
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/contacts/{contact}', [AdminController::class, 'show'])->name('admin.show');
+    Route::delete('/contacts/{contact}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    //タグ管理画面
+    Route::resource('tags',TagController::class)->except(['show','create']);
 });
