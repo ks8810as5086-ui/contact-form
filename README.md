@@ -161,8 +161,5 @@ docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/htm
 * **API**: JSON Resources
 * **Utility**: CSV Export (BOM付き), Pagination
 
-## 利用方法
-1. **リポジトリのクローン**
-   ```bash
-   git clone <repository-url>
-   cd <project-folder>
+###　作成者
+西海　顕一郎
