@@ -177,7 +177,6 @@ sail npm run dev
 
 ## 開発環境URL
 http://localhost
-phpMyAdmin: http://localhost:8080
 
 ## 作成者
 西海　顕一郎
