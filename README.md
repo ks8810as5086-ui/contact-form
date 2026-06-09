@@ -1,11 +1,65 @@
-# COACHTECH お問い合わせフォーム
+## COACHTECH お問い合わせフォーム
 
 ## 概要
 本プロジェクトは、ユーザーが問い合わせ内容を送信し、管理者がその内容を閲覧・管理できる「お問い合わせフォームシステム」です。
 フロントエンドのフォーム機能に加え、管理者用の管理画面（認証機能付き）、および外部システムとの連携を想定した公開API機能を実装しています。
 ご提示いただいた詳細な手順を、GitHub等のリポジトリでそのまま使える形に整理し、`README.md`（環境構築セクション）としてまとめました。
 
-# 開発環境構築ガイド
+## ER図
+    users ||--o{ contacts : "作成する"
+    categories ||--o{ contacts : "分類される"
+    contacts ||--o{ contact_tag : "紐づく"
+    tags ||--o{ contact_tag : "紐づく"
+
+    users {
+        bigint id PK
+        varchar name
+        varchar email
+        timestamp email_verified_at
+        varchar password
+        varchar remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    categories {
+        bigint id PK
+        varchar content
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    contacts {
+        bigint id PK
+        bigint category_id FK
+        varchar first_name
+        varchar last_name
+        tinyint gender
+        varchar email
+        varchar tel
+        varchar address
+        varchar building
+        varchar detail
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    tags {
+        bigint id PK
+        varchar name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    contact_tag {
+        bigint id PK
+        bigint contact_id FK
+        bigint tag_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+# 環境構築手順
 
 本プロジェクトは Docker (Laravel Sail) を使用して開発環境を構築します。以下の手順に従って環境をセットアップしてください。
 1. プロジェクトの作成と初期設定
@@ -101,7 +155,7 @@ sail npm run dev
 
 以上で環境構築は完了です。ブラウザから `http://localhost` にアクセスして動作を確認してください。phpMyAdminは `http://localhost:8080` からアクセス可能です。
 
-## 技術スタック
+## 使用技術
 | カテゴリ | 技術・ツール |
 | :--- | :--- |
 | **OS** | Dockerが動作する環境 |
@@ -121,5 +175,9 @@ sail npm run dev
 | `PUT` | `/api/v1/contacts/{id}` | お問い合わせ更新 |
 | `DELETE` | `/api/v1/contacts/{id}` | お問い合わせ削除 |
 
-###　作成者
+## 開発環境URL
+http://localhost
+phpMyAdmin: http://localhost:8080
+
+## 作成者
 西海　顕一郎
