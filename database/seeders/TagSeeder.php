@@ -14,7 +14,7 @@ class TagSeeder extends Seeder
     {
         $tags = ['質問', '要望', '不具合報告', 'ご意見', 'その他'];
         foreach ($tags as $tagName) {
-            Tag::create(['name' => $tagName]);
+            Tag::factory()->create(['name' => $tagName]);
         }
     }
 }
