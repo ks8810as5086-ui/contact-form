@@ -10,7 +10,7 @@
 # 開発環境構築ガイド
 
 本プロジェクトは Docker (Laravel Sail) を使用して開発環境を構築します。以下の手順に従って環境をセットアップしてください。
-## 1. プロジェクトの作成と初期設定
+1. プロジェクトの作成と初期設定
 まず、Laravelプロジェクトを作成し、Sailをインストールします。
 
 # Laravelプロジェクトの作成 (Laravel 10.x)
@@ -43,7 +43,7 @@ docker run --rm \
     php artisan sail:install --with=mysql
 > **注意**: `docker-compose.yml` 内の `mysql` 設定に `platform: 'linux/amd64'` が含まれていることを確認してください。
 
-## 2. 環境変数 (.env) の設定
+2. 環境変数 (.env) の設定
 `.env` ファイルを開き、データベース接続情報を確認・修正してください。
 DB_CONNECTION=mysql
 DB_HOST=mysql
@@ -52,7 +52,7 @@ DB_DATABASE=laravel
 DB_USERNAME=sail
 DB_PASSWORD=password
 
-## 3. フロントエンドのセットアップ
+3. フロントエンドのセットアップ
 Tailwind CSSおよび必要な依存関係をインストールします。
 # 依存パッケージのインストール
 ./vendor/bin/sail npm install
@@ -69,7 +69,7 @@ content: [
   "./resources/**/*.vue",
 ],
 
-## 4. サービスの追加 (phpMyAdmin)
+4. サービスの追加 (phpMyAdmin)
 `docker-compose.yml` に `phpmyadmin` を追記します。
 phpmyadmin:
     image: 'phpmyadmin:latest'
@@ -84,21 +84,21 @@ phpmyadmin:
     depends_on:
         - mysql
 
-## 5. アプリケーションの起動と初期化
-# Sailの起動
+5. アプリケーションの起動と初期化
+Sailの起動
 ./vendor/bin/sail up -d
 
-# エイリアスの設定 (zshの場合)
+エイリアスの設定 (zshの場合)
 echo "alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'" >> ~/.zshrc
 source ~/.zshrc
 
-# アプリケーションキーの生成
+アプリケーションキーの生成
 sail artisan key:generate
 
-# データベースのマイグレーションとシーディング
+データベースのマイグレーションとシーディング
 sail artisan migrate --seed
 
-# Vite開発サーバーの起動 (別ターミナルで実行)
+Vite開発サーバーの起動 (別ターミナルで実行)
 sail npm run dev
 
 以上で環境構築は完了です。ブラウザから `http://localhost` にアクセスして動作を確認してください。phpMyAdminは `http://localhost:8080` からアクセス可能です。
